@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monthly Forecasts</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d0b14;--card:#17131f;--edge:rgba(216,185,104,.28);--ink:#f3ecf7;--muted:#b3a8c2;--gold:#d8b968}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;min-height:100vh;padding:48px 16px;
+    background-image:radial-gradient(700px 400px at 20% -10%,rgba(216,185,104,.10),transparent 60%)}
+  .wrap{max-width:640px;margin:0 auto}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;font-weight:600;color:var(--gold);margin-bottom:8px}
+  p.sub{color:var(--muted);margin-bottom:28px}
+  a.month{display:block;background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:18px 20px;margin-bottom:12px;color:var(--ink);text-decoration:none}
+  a.month:hover{border-color:var(--gold)}
+  .when{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:600}
+  .go{color:var(--muted);font-size:14px;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Monthly Forecasts</h1>
+  <p class="sub">Natal chart, Human Design and the month's transits, read for the business.</p>
+  <!-- NEW MONTH: copy a block, point it at the new folder (month-year, lowercase), newest on top. -->
+  <a class="month" href="july-2026/"><div class="when">July 2026</div><div class="go">Open the forecast →</div></a>
+  <a class="month" href="june-2026/"><div class="when">June 2026</div><div class="go">Open the forecast →</div></a>
+</div>
+</body>
+</html>

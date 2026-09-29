@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>July 2026 Cosmic Forecast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-1:#0A0A1F;--navy-2:#1A1A3E;--navy-card:#15152e;--navy-card-2:#1c1c40;
+    --teal:#7EECD4;--teal-2:#4FD1C5;--lav:#B88CED;--pink:#E8A0E8;--coral:#C9617D;
+    --text:#F5EFFB;--text-soft:#b9b4d6;--line:rgba(184,140,237,0.18);
+    --grad:linear-gradient(135deg,#B88CED,#E8A0E8,#7EECD4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy-1);color:var(--text);line-height:1.65;overflow-x:hidden}
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .star{position:absolute;background:#fff;border-radius:50%;opacity:.5;animation:tw 4s infinite ease-in-out}
+  @keyframes tw{0%,100%{opacity:.2}50%{opacity:.9}}
+  .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.22;z-index:0;pointer-events:none}
+  .orb1{width:400px;height:400px;background:var(--lav);top:-100px;left:-120px}
+  .orb2{width:360px;height:360px;background:var(--teal);bottom:-120px;right:-100px}
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 22px 90px}
+
+  .ticker{position:relative;z-index:3;background:var(--grad);overflow:hidden;white-space:nowrap;padding:9px 0}
+  .ticker span{display:inline-block;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:#1A1A3E;text-transform:uppercase;animation:slide 36s linear infinite;font-weight:700}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .hero{text-align:center;padding:60px 0 40px}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--lav);margin-bottom:18px}
+  .hero h1{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-1.5px;font-size:clamp(38px,7vw,72px);line-height:1.02}
+  .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .who{margin-top:18px;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
+  .hero .essence{max-width:640px;margin:22px auto 0;color:var(--text-soft);font-size:17px}
+  .vibe{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+  .vibe .v{background:rgba(184,140,237,.08);border:1px solid var(--line);border-radius:16px;padding:16px 22px;min-width:150px}
+  .vibe .v .lbl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lav);margin-bottom:6px}
+  .vibe .v .val{font-family:'Sora',sans-serif;font-weight:700;font-size:18px}
+
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:14px 0 36px;position:sticky;top:0;z-index:20;background:rgba(10,10,31,.85);backdrop-filter:blur(10px);padding:12px;border-radius:40px;border:1px solid var(--line)}
+  .tabs button{background:transparent;border:none;color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 16px;border-radius:30px;cursor:pointer;transition:.2s}
+  .tabs button:hover{color:var(--text)}
+  .tabs button.active{color:var(--navy-1);background:var(--grad);font-weight:700}
+
+  .panel{display:none}
+  .panel.on{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .section-title{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.5px;font-size:32px;margin-bottom:6px}
+  .section-sub{color:var(--text-soft);font-size:15px;margin-bottom:24px}
+
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+  .filters button{background:rgba(184,140,237,.08);border:1px solid var(--line);color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 16px;border-radius:30px;cursor:pointer;transition:.2s}
+  .filters button:hover{color:var(--text);border-color:var(--lav)}
+  .filters button.on{background:var(--grad);color:var(--navy-1);font-weight:700;border-color:transparent}
+
+  .layers{display:grid;gap:16px}
+  .layer{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.3s}
+  .layer.hidden{display:none}
+  .layer-head{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer}
+  .layer-head .ico{width:48px;height:48px;border-radius:13px;background:var(--grad);display:grid;place-items:center;font-size:23px;flex-shrink:0}
+  .layer-head .meta{flex:1}
+  .layer-head .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
+  .layer-head h4{font-family:'Sora',sans-serif;font-weight:700;font-size:21px;line-height:1.15}
+  .chev{color:var(--text-soft);transition:.3s;font-size:18px}
+  .layer.open .chev{transform:rotate(180deg)}
+  .layer-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+  .layer.open .layer-body{max-height:2400px}
+  .layer-inner{padding:2px 24px 26px;color:var(--text-soft);font-size:15.5px}
+  .layer-inner p{margin-bottom:12px}
+  .layer-inner strong{color:var(--text);font-weight:600}
+  .layer-inner .pull{background:rgba(126,236,212,.07);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;padding:12px 16px;margin-top:14px;font-size:14px;color:var(--text)}
+  .layer-inner .pull .pl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:4px}
+
+  .cal-wrap{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:20px;padding:26px}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  .dow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-soft);text-align:center;text-transform:uppercase;padding-bottom:6px}
+  .day{aspect-ratio:1;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;border:1px solid var(--line);position:relative;transition:.2s}
+  .day.empty{border:none;background:transparent}
+  .day .dot{width:6px;height:6px;border-radius:50%;margin-top:3px}
+  .day.act{cursor:pointer}
+  .day.act:hover{transform:scale(1.08);border-color:var(--teal);z-index:5}
+  .day.go{background:rgba(126,236,212,.14);border-color:var(--teal-2)}
+  .day.go .dot{background:var(--teal)}
+  .day.rest{background:rgba(200,97,125,.16);border-color:var(--coral)}
+  .day.rest .dot{background:var(--coral)}
+  .day.peak{background:rgba(232,160,232,.18);border-color:var(--pink)}
+  .day.peak .dot{background:var(--pink)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text-soft)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .keydates{margin-top:22px;display:grid;gap:10px}
+  .kd{display:flex;gap:14px;align-items:flex-start;background:rgba(10,10,31,.4);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kd .d{font-family:'Space Mono',monospace;font-size:13px;color:var(--teal);font-weight:700;min-width:60px}
+  .kd .t{font-size:14px;color:var(--text-soft)}
+  .kd .t b{color:var(--text)}
+
+  .bestcols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.bestcols{grid-template-columns:1fr}}
+  .bestcol{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:18px;padding:22px}
+  .bestcol h5{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+  .bestcol.act h5{color:var(--teal)}
+  .bestcol.protect h5{color:var(--coral)}
+  .bestcol ul{list-style:none}
+  .bestcol li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;color:var(--text-soft)}
+  .bestcol li:last-child{border:none}
+  .bestcol li b{color:var(--text);font-family:'Space Mono',monospace;font-size:13px;margin-right:8px}
+
+  .wealth-hero{background:linear-gradient(160deg,rgba(126,236,212,.1),rgba(184,140,237,.08));border:1px solid var(--teal);border-radius:20px;padding:28px;margin-bottom:18px}
+  .wealth-hero .big{font-family:'Sora',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.5px;margin-bottom:8px}
+  .wealth-hero p{color:var(--text-soft);font-size:15.5px}
+
+  .jcard{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:16px}
+  .jcard label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--lav);margin-bottom:10px}
+  .jcard textarea{width:100%;background:rgba(10,10,31,.6);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;min-height:90px;resize:vertical}
+  .jcard textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(126,236,212,.12)}
+  .save-btn{background:var(--grad);color:var(--navy-1);border:none;border-radius:40px;padding:14px 30px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:.25s}
+  .save-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(184,140,237,.45)}
+  .saved{font-family:'Space Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:1px;margin-left:14px;opacity:0;transition:.3s}
+  .saved.show{opacity:1}
+
+  .top3{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--lav);border-radius:20px;padding:28px;margin-top:30px}
+  .top3 .t3lbl{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--lav);text-align:center;margin-bottom:18px}
+  .top3 .item{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .top3 .item:last-child{border:none}
+  .top3 .n{width:34px;height:34px;border-radius:50%;background:var(--grad);color:var(--navy-1);font-family:'Sora',sans-serif;font-weight:800;display:grid;place-items:center;flex-shrink:0;font-size:15px}
+  .top3 .item p{font-size:15.5px;padding-top:4px}
+
+  .modal{position:fixed;inset:0;background:rgba(5,5,16,.78);backdrop-filter:blur(6px);z-index:50;display:none;align-items:center;justify-content:center;padding:22px}
+  .modal.show{display:flex}
+  .modal-box{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--teal);border-radius:22px;max-width:440px;width:100%;padding:30px;position:relative}
+  .modal-box h4{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:4px}
+  .modal-box .x{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--text-soft);font-size:22px;background:none;border:none}
+
+  footer{text-align:center;margin-top:50px;color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="ticker"><span id="tick"></span></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">✦ July 2026 ✦ Your Personalized Forecast</div>
+    <h1>Build the Foundation,<br>Then <em>Let Them Find You</em></h1>
+    <div class="who">Projector 3/5 ✦ Emotional Authority ✦ Split Definition</div>
+    <p class="essence">This month begins in your roots and ends in your spotlight. The New Moon on the 14th asks you to strengthen what holds your business up before you show anything new. Then July's final days bring a once-in-twelve-years career expansion. The Full Moon on the 29th lights up your career and reputation zone. Let the recognition come to you. Your authority says sleep on every big invitation and only commit once the wave settles to calm.</p>
+    <div class="vibe">
+      <div class="v"><div class="lbl">Overall Energy</div><div class="val">Grounding → Rising</div></div>
+      <div class="v"><div class="lbl">Money Climate</div><div class="val">Expanding</div></div>
+      <div class="v"><div class="lbl">Best Move</div><div class="val">Strengthen Roots</div></div>
+      <div class="v"><div class="lbl">Watch For</div><div class="val">Premature Push</div></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="active" data-p="layers">The 6 Layers</button>
+    <button data-p="calendar">Transit Calendar</button>
+    <button data-p="bestdays">Best Days</button>
+    <button data-p="wealth">Wealth Layer</button>
+    <button data-p="journal">Reflection</button>
+  </div>
+
+  <!-- PANEL: 6 LAYERS -->
+  <div class="panel on" id="panel-layers">
+    <div class="section-title">This Month, Layer by Layer</div>
+    <div class="section-sub">Tap any layer to expand. Filter by what you need right now.</div>
+    <div class="filters" id="filters">
+      <button class="on" data-f="all">All</button>
+      <button data-f="money">💰 Money</button>
+      <button data-f="visibility">📣 Visibility</button>
+      <button data-f="launching">🚀 Launching</button>
+      <button data-f="rest">🌙 Rest</button>
+      <button data-f="relationship">🤝 Relationships</button>
+    </div>
+    <div class="layers" id="layers"></div>
+
+    <div class="top3">
+      <div class="t3lbl">✦ The 3 Most Important Things To Do This Month ✦</div>
+      <div class="item"><div class="n">1</div><p>Use the New Moon on July 14th to set one concrete intention for your business foundation: your pricing structure, your backend systems, or the inner alignment that holds everything up. Write it down. This plants a seed that your 12-year expansion will grow 17 days later.</p></div>
+      <div class="item"><div class="n">2</div><p>Show up visibly between July 24th and 28th, when your natural leadership frequency gets amplified by the sky. Post the content that positions you as the expert. When recognition comes, and it will around the 29th, sleep on it before committing. The calm yes is the real yes.</p></div>
+      <div class="item"><div class="n">3</div><p>Do not discount your prices or over-give on July 27th. The part of your wiring that confuses your worth is activated that day. Name your number and hold it. The discomfort is the old pattern breaking, not a sign you are charging too much.</p></div>
+    </div>
+  </div>
+
+  <!-- PANEL: CALENDAR -->
+  <div class="panel" id="panel-calendar">
+    <div class="section-title">July at a Glance</div>
+    <div class="section-sub">Color-coded by what the day supports. Tap a marked day for detail.</div>
+    <div class="cal-wrap">
+      <div class="cal" id="cal"></div>
+      <div class="legend">
+        <span><i style="background:var(--teal)"></i> Best to act</span>
+        <span><i style="background:var(--pink)"></i> Peak / activation</span>
+        <span><i style="background:var(--coral)"></i> Protect energy</span>
+      </div>
+      <div class="keydates" id="keydates"></div>
+    </div>
+  </div>
+
+  <!-- PANEL: BEST DAYS -->
+  <div class="panel" id="panel-bestdays">
+    <div class="section-title">Your Timing Map</div>
+    <div class="section-sub">When to move, and when to pull back, based on your design.</div>
+    <div class="bestcols">
+      <div class="bestcol act">
+        <h5>◆ Best Days To Act</h5>
+        <ul id="actList"></ul>
+      </div>
+      <div class="bestcol protect">
+        <h5>◆ Best Days To Protect Energy</h5>
+        <ul id="protectList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: WEALTH -->
+  <div class="panel" id="panel-wealth">
+    <div class="section-title">Wealth & Abundance</div>
+    <div class="section-sub">Where the money wants to move this month, and how to meet it.</div>
+    <div class="wealth-hero">
+      <div class="big">💰 Your 12-year abundance cycle is resetting</div>
+      <p>The biggest money story of July is not a single transaction. It is a once-in-twelve-years expansion resetting in the root system of your business on the 31st. Whatever you invest in your foundation this month, your pricing model, your backend systems, your sense of inner security around money, gets expanded for the next 12 years. The most empowered money day is the 26th. But watch the 27th: the part of your wiring that confuses your worth gets activated. Hold your prices.</p>
+    </div>
+    <div class="layers" id="wealthLayers"></div>
+  </div>
+
+  <!-- PANEL: JOURNAL -->
+  <div class="panel" id="panel-journal">
+    <div class="section-title">Reflection & Action Journal</div>
+    <div class="section-sub">Track what keeps surfacing. Saved in your browser for next month.</div>
+    <div class="jcard">
+      <label>What pattern keeps showing up this month?</label>
+      <textarea id="j_pattern" placeholder="The recurring block, fear, or theme you notice..."></textarea>
+    </div>
+    <div class="jcard">
+      <label>One aligned action I am committing to</label>
+      <textarea id="j_action" placeholder="The move that feels like a yes in your body after the wave passes..."></textarea>
+    </div>
+    <div class="jcard">
+      <label>What I am protecting my energy from</label>
+      <textarea id="j_protect" placeholder="The thing you are saying no to this month..."></textarea>
+    </div>
+    <button class="save-btn" onclick="saveJournal()">Save Reflection</button>
+    <span class="saved" id="savedMsg">✓ Saved</span>
+  </div>
+
+  <footer>YOUR SACRED PLANNING TOOL ✦ BUILT FOR YOUR CHART ✦ JULY 2026</footer>
+</div>
+
+<div class="modal" id="dayModal">
+  <div class="modal-box">
+    <button class="x" onclick="closeModal()">×</button>
+    <div class="eyebrow" id="mDate" style="margin-bottom:6px"></div>
+    <h4 id="mTitle"></h4>
+    <p id="mBody" style="color:var(--text-soft);font-size:15px;margin-top:10px"></p>
+  </div>
+</div>
+
+<script>
+/* stars */
+(function(){const s=document.getElementById('stars');for(let i=0;i<130;i++){const d=document.createElement('div');d.className='star';const sz=Math.random()*2+1;d.style.width=d.style.height=sz+'px';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*4+'s';s.appendChild(d);}})();
+document.getElementById('tick').textContent=('✦ JULY 2026 COSMIC FORECAST ✦ BUILD THE FOUNDATION, THEN LET THEM FIND YOU ✦ YOUR 12-YEAR EXPANSION RESETS ').repeat(4);
+
+/* tabs */
+const tabs=document.getElementById('tabs');
+tabs.addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;[...tabs.children].forEach(b=>b.classList.remove('active'));e.target.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.getElementById('panel-'+e.target.dataset.p).classList.add('on');});
+
+/* ===== REAL CHART DATA FOR SUNNY - JULY 2026 - PLAIN LANGUAGE ===== */
+const LAYERS=[
+  {cat:['rest'],ico:'🌙',tag:'Layer 1',title:'Internal Landscape',
+   html:`<p>Emotionally, July carries a building wave. The first five days activate one of the deepest, most personal energies in your design. It is a provocation frequency, the part of you that feels restless and pressured. You may feel agitated or pushed to react in early July. That pressure is not a signal to act. It is a signal to let your emotional wave complete before deciding anything.</p>
+<p>The <strong>New Moon on the 14th</strong> lands in your foundation zone, the most private, structural part of your chart. This is where your inner stability lives. If your nervous system has been running on fumes, this is the moon asking you to rebuild the base before you build the next level.</p>
+<p>Your design learns by trial and error, and people project solutions onto you. July's first half is for the trial-and-error work on your foundation. The second half is when those projections come calling. People will see you as someone who has the answer. Make sure you have done the inner work first so the answer is real.</p>
+<p>From the <strong>6th through the 11th</strong>, you will feel outside pressure to start something new, to begin a project, to push forward. That pressure is not yours. It is coming from the energy weather, not from your design. You are absorbing other people's urgency. Let it pass through you without acting on it.</p>
+<div class="pull"><span class="pl">Authority reminder</span>Every big decision this month, especially around the 29th through 31st when the expansion energy peaks, needs at least one full sleep cycle. Feel the excitement, then wait. If the yes is still there when the wave is calm, that is the real yes.</div>`},
+
+  {cat:['visibility','relationship'],ico:'🌍',tag:'Layer 2',title:'External Landscape',
+   html:`<p>The outer world opens gradually this month. Early July is quieter. You may find yourself in conversations about what you are building rather than showing it publicly. <strong>July 3rd</strong> brings a clarity moment about your message and how you communicate your deeper work to the world. Pay attention to what becomes clear that day about what you are actually saying versus what you mean to say.</p>
+<p>The real shift happens from <strong>July 24th onward</strong>. Your natural leadership frequency gets amplified by the sky. This is the energy that makes people recognize your authority without you pushing for it. It is the part of your design that leads by being seen, not by chasing. When this lights up, people notice you without effort on your part.</p>
+<p>The <strong>Full Moon on the 29th</strong> lights up your career and reputation zone. You are built for public visibility, and this Full Moon illuminates that part of your chart directly. The same day, a powerful expansion energy also activates. Expect at least one significant recognition moment, invitation, or career development in the last four days of July.</p>
+<p>Partnership and client conversations flow more easily around the <strong>18th</strong>. If you have been waiting for a conversation with a collaborator or a client to click into place, that is a good week for it.</p>
+<div class="pull"><span class="pl">Projector strategy</span>The first three weeks are for inner work. The last week is when the world sees what you built. You do not chase the invitation. You get ready, and the door opens. That door opens around the 29th.</div>`},
+
+  {cat:['visibility','launching','relationship'],ico:'🚀',tag:'Layer 3',title:'Business Focus',
+   html:`<p>July splits into two clear phases for your business.</p>
+<p><strong>Phase 1 (July 1 to 14): Foundation and infrastructure.</strong> The New Moon in your foundation zone on the 14th is your signal to plant seeds around the invisible business backbone. Your systems, your pricing structure, your inner alignment. The 3rd and the 8th both bring creative tension: the 3rd illuminates the gap between your big-picture teaching vision and how you actually communicate it, and the 8th stirs the push-pull between career ambition and your inner needs. Use these tension points to get honest about what needs fixing before you grow.</p>
+<p><strong>Phase 2 (July 24 to 31): Career activation and visibility.</strong> Your leadership frequency is amplified. The Full Moon in your career zone, combined with the expansion energy on the 29th and the <strong>12-year cycle reset on the 31st</strong>, creates your most powerful career window of the year. This is the week to say yes to the invitation that has been building. Remember your strategy: wait for the invitation, do not pitch or chase.</p>
+<p>Run every commitment through your authority. If someone offers you something between the 29th and 31st, sleep on it. The excitement will be real. The expansion energy will feel huge. But your emotional wave needs time to settle. If the calm yes is still there the next day, that is your green light.</p>
+<div class="pull"><span class="pl">Highest-leverage move</span>Spend the first half building your foundation quietly. The second half is when the 12-year career expansion door opens. Be ready, not chasing. Share your expertise between the 24th and 28th, then let people come to you.</div>`},
+
+  {cat:['money'],ico:'💰',tag:'Layer 4',title:'Wealth & Abundance',
+   html:`<p>Money this month is about <strong>expansion from within</strong>. Your 12-year abundance cycle is resetting on the 31st. This once-in-twelve-years event expands everything connected to your foundations, your inner security, and the root system of your business. This is not a windfall moment. It is a foundation-building moment that sets the earning trajectory for the next 12 years.</p>
+<p>Your income and self-worth zone gets activated in the second half of July with powerful, forward-moving energy. <strong>July 26th</strong> is the most empowered money day of the month. Pricing decisions and income conversations carry extra force that day. Your chart says money flows best when you communicate, teach, and share ideas, and this active energy in your income zone confirms it.</p>
+<p>But watch <strong>July 27th</strong> carefully. The part of your wiring that confuses your worth gets activated that day. This is the same pattern that makes you doubt your pricing, soften your rates, or give too much away. It hits your daily work zone, so it may show up as undervaluing your time in client work or saying yes to a project that pays less than you are worth. When you feel the pull to discount, pause. That is the wound speaking, not reality.</p>
+<p>Your chart shows you earn through depth and transformation work. Cheap, surface-level offers will always feel misaligned for you. The expansion cycle reset is confirming: go deeper, charge accordingly, and let the foundation hold the weight of bigger numbers.</p>
+<div class="pull"><span class="pl">Money move</span>Your 12-year abundance cycle is resetting. Invest in what holds your business up. Do not discount your rates on the 27th, that is old wiring, not truth. The empowered money day is the 26th. Use it.</div>`},
+
+  {cat:['all'],ico:'⚡',tag:'Layer 5',title:'Patterns & Sidetracks',
+   html:`<p>Your biggest trap this month is <strong>premature launching</strong>. With so much foundation energy building toward the explosive career activation and expansion at month's end, you may feel the urge to announce something, launch something, or make a big public move before the foundation is ready. As a Projector, timing is everything. If you push before the invitation arrives, you will hit bitterness. The invitation is coming in the last week. Wait for it.</p>
+<p>The second trap is the <strong>worth-confusion activation on July 27th</strong>. This is the part of your wiring that creates confusion around your value. It hits your daily work zone, the place where you actually serve clients and do the work. Watch for: agreeing to take on a client at a lower rate because you feel bad, second-guessing a price you already set, or giving away your depth work for free.</p>
+<p>Your core worth wound is active at a background level all month. The slow-moving healing force that has been approaching your original wound point is now in the same territory, building toward the deeper healing work coming in 2028. The antidote is not to push through it but to let your emotional wave clarify what is actually true. You are not worth less because the wave dips.</p>
+<p><strong>July 8th</strong> can create a flash of frustration or the urge to force a career move. The tension between inner needs and public ambition runs deep in your chart. Let it inform you, not drive you. And from <strong>July 6th through 11th</strong>, the pressure to start new things is other people's energy moving through your open centers, not yours. Let it pass.</p>
+<div class="pull"><span class="pl">Do not do this</span>If you feel the urge to launch before the 24th, that is conditioning talking, not your design. Your design says wait. The right door opens on its own in the last week of July.</div>`},
+
+  {cat:['all'],ico:'🗓️',tag:'Layer 6',title:'Timing Map',
+   html:`<p><strong>Jul 1 to 5:</strong> A deeply personal grounding energy is activated in your design. You may feel provoked or restless. Feel it, but do not react from it. Let your emotional wave complete. The 3rd brings a clarity moment about your message.</p>
+<p><strong>Jul 6 to 11:</strong> Outside pressure to start new things moves through your open centers. This is not your energy. Do not begin anything major from this borrowed urgency. The 8th stirs tension between career ambition and inner needs.</p>
+<p><strong>Jul 12 to 17:</strong> Pressure to over-explain or get lost in details. Focus on clarity, not quantity. <strong>New Moon on the 14th in your foundation zone.</strong> Plant seeds for your inner business infrastructure. Set one concrete intention.</p>
+<p><strong>Jul 18 to 23:</strong> Borrowed storytelling energy. Good for absorbing ideas, not for committing to them. The 20th is a smooth alignment day for daily work and action.</p>
+<p><strong>Jul 24 to 29:</strong> Your natural leadership frequency gets amplified. <strong>Your visibility window.</strong> Be seen, share your expertise, respond to engagement. The 26th is your empowered money day. The 27th triggers the worth wound; hold your prices. <strong>Full Moon in your career zone on the 29th.</strong> Career harvest, recognition, completion.</p>
+<p><strong>Jul 30 to 31:</strong> Retreat energy. Rest and receive. <strong>Your 12-year expansion cycle resets on the 31st.</strong> This is the biggest single activation of your year. It expands your foundations for the next 12 years.</p>`}
+];
+
+function highlightFilter(){
+  document.getElementById('filters').addEventListener('click',e=>{
+    if(e.target.tagName!=='BUTTON')return;
+    [...e.target.parentElement.children].forEach(b=>b.classList.remove('on'));
+    e.target.classList.add('on');
+    const f=e.target.dataset.f;
+    document.querySelectorAll('#layers .layer').forEach(L=>{
+      const cats=L.dataset.cats.split(',');
+      L.classList.toggle('hidden', f!=='all' && !cats.includes(f) && !cats.includes('all'));
+    });
+  });
+}
+
+function buildLayers(target,list,openFirst){
+  const c=document.getElementById(target);c.innerHTML='';
+  list.forEach((L,i)=>{
+    const el=document.createElement('div');
+    el.className='layer'+(openFirst&&i===0?' open':'');
+    el.dataset.cats=L.cat.join(',');
+    el.innerHTML=`<div class="layer-head"><div class="ico">${L.ico}</div><div class="meta"><div class="tag">${L.tag}</div><h4>${L.title}</h4></div><div class="chev">▾</div></div><div class="layer-body"><div class="layer-inner">${L.html}</div></div>`;
+    el.querySelector('.layer-head').onclick=()=>el.classList.toggle('open');
+    c.appendChild(el);
+  });
+}
+buildLayers('layers',LAYERS,true);
+buildLayers('wealthLayers',[LAYERS[3]],true);
+highlightFilter();
+
+/* best days */
+const ACT=[
+  ['1st to 5th','A core energy in your design is amplified. You are grounded and consistent. Good for presence, honest self-assessment, and feeling into what is true.'],
+  ['20th','A smooth alignment day. Take action on work and routines that feel like a body yes after your wave settles.'],
+  ['24th to 28th','Your leadership frequency is amplified. Your visibility window. Share your expertise, be seen, respond to every invitation that lands.'],
+  ['26th','Empowered money day. Pricing decisions and income conversations carry extra force. Name your number.']
+];
+const PROTECT=[
+  ['6th to 11th','Outside pressure to start new things is moving through your open centers. Do not initiate from borrowed urgency. This is not your energy.'],
+  ['8th','Tension between career ambition and inner needs. Let it inform you, do not react from it.'],
+  ['27th','The part of your wiring that confuses your worth is activated. Do not lower prices, do not say yes to undervalued work. Hold your number.']
+];
+function fillBest(id,arr){const ul=document.getElementById(id);arr.forEach(([d,t])=>{const li=document.createElement('li');li.innerHTML=`<b>${d}</b>${t}`;ul.appendChild(li);});}
+fillBest('actList',ACT);fillBest('protectList',PROTECT);
+
+/* calendar - July 2026 starts on Wednesday (offset 3) */
+const GO={1:1,2:1,3:1,4:1,5:1,20:1,24:1,25:1,26:1,28:1};
+const REST={6:1,7:1,8:1,9:1,10:1,11:1,27:1};
+const PEAK={14:1,29:1,31:1};
+const NOTES={
+  1:'A deeply personal grounding energy activates in your design. You may feel provoked. Feel it, do not react from it.',
+  3:'A clarity moment about your message and how you share your deeper work with the world.',
+  5:'Steady, structured energy supports foundation work. Good for systems and planning.',
+  6:'Outside pressure to start something new enters your open centers. This is not your energy. Let it pass.',
+  8:'Tension between your inner needs and your career ambition. Let it inform you, not drive you.',
+  14:'New Moon in your foundation zone. Plant one concrete seed for your business infrastructure. Set an intention.',
+  20:'Alignment day. Good for daily work, routines, and health. Action flows smoothly.',
+  24:'Your leadership frequency gets amplified. Your visibility window opens. Share your expertise. Be seen.',
+  26:'The most empowered money day of the month. Price with confidence. Income conversations carry weight.',
+  27:'The part of your wiring that confuses your worth is activated. Do not discount or over-give today. Hold your rates.',
+  29:'Full Moon in your career and reputation zone. Career harvest and recognition. A powerful expansion also activates. A peak moment.',
+  31:'Your 12-year expansion cycle resets. This is the biggest single activation of your year. It expands your foundations for the next 12 years.'
+};
+(function buildCal(){
+  const c=document.getElementById('cal');
+  ['S','M','T','W','T','F','S'].forEach(x=>{const e=document.createElement('div');e.className='dow';e.textContent=x;c.appendChild(e);});
+  const offset=3;
+  const days=31;
+  for(let i=0;i<offset;i++){const e=document.createElement('div');e.className='day empty';c.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const e=document.createElement('div');e.className='day';
+    let label='';
+    if(PEAK[d]){e.classList.add('peak','act');label='Peak / activation';}
+    else if(GO[d]){e.classList.add('go','act');label='Best day to act';}
+    else if(REST[d]){e.classList.add('rest','act');label='Protect your energy';}
+    if(e.classList.contains('act')){e.innerHTML=`${d}<span class="dot"></span>`;e.onclick=()=>openModal(d,label,NOTES[d]||label);}
+    else e.textContent=d;
+    c.appendChild(e);
+  }
+  const kd=document.getElementById('keydates');
+  const items=[
+    ['Jul 1','<b>Grounding activation begins.</b> A core energy in your design is amplified for five days.'],
+    ['Jul 3','<b>Clarity moment.</b> What you are actually saying versus what you mean to say becomes visible.'],
+    ['Jul 8','<b>Career tension.</b> Push-pull between ambition and inner needs. Let it inform, not drive.'],
+    ['Jul 14','<b>New Moon in your foundation zone.</b> Plant your seed. Set one intention for your infrastructure.'],
+    ['Jul 20','<b>Alignment day.</b> Smooth energy for work, routines, and action.'],
+    ['Jul 24','<b>Visibility window opens.</b> Your leadership frequency is amplified. Be seen.'],
+    ['Jul 26','<b>Empowered money day.</b> Price with confidence. Income conversations carry weight.'],
+    ['Jul 27','<b>Worth-wound trigger.</b> The part of your wiring that confuses your value is activated. Hold your rates.'],
+    ['Jul 29','<b>Full Moon in your career zone.</b> Career harvest. Recognition. A peak expansion moment.'],
+    ['Jul 31','<b>12-year expansion resets.</b> The biggest activation of your year. Your foundations expand.']
+  ];
+  items.forEach(([d,t])=>{const el=document.createElement('div');el.className='kd';el.innerHTML=`<div class="d">${d}</div><div class="t">${t}</div>`;kd.appendChild(el);});
+})();
+function openModal(d,title,body){document.getElementById('mDate').textContent='July '+d;document.getElementById('mTitle').textContent=title;document.getElementById('mBody').textContent=body;document.getElementById('dayModal').classList.add('show');}
+function closeModal(){document.getElementById('dayModal').classList.remove('show');}
+document.getElementById('dayModal').addEventListener('click',e=>{if(e.target.id==='dayModal')closeModal();});
+
+/* journal */
+function saveJournal(){try{const data={p:j_pattern.value,a:j_action.value,pr:j_protect.value};localStorage.setItem('cosmicJournal_July2026',JSON.stringify(data));const s=document.getElementById('savedMsg');s.classList.add('show');setTimeout(()=>s.classList.remove('show'),2200);}catch(e){}}
+(function load(){try{const r=localStorage.getItem('cosmicJournal_July2026');if(r){const d=JSON.parse(r);j_pattern.value=d.p||'';j_action.value=d.a||'';j_protect.value=d.pr||'';}}catch(e){}})();
+</script>
+</body>
+</html>
