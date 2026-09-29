@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>November 2026 Forecast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-1:#0A0A1F;--navy-2:#1A1A3E;--navy-card:#15152e;--navy-card-2:#1c1c40;
+    --teal:#7EECD4;--teal-2:#4FD1C5;--lav:#B88CED;--pink:#E8A0E8;--coral:#C9617D;
+    --text:#F5EFFB;--text-soft:#b9b4d6;--line:rgba(184,140,237,0.18);
+    --grad:linear-gradient(135deg,#B88CED,#E8A0E8,#7EECD4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy-1);color:var(--text);line-height:1.65;overflow-x:hidden}
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .star{position:absolute;background:#fff;border-radius:50%;opacity:.5;animation:tw 4s infinite ease-in-out}
+  @keyframes tw{0%,100%{opacity:.2}50%{opacity:.9}}
+  .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.22;z-index:0;pointer-events:none}
+  .orb1{width:400px;height:400px;background:var(--lav);top:-100px;left:-120px}
+  .orb2{width:360px;height:360px;background:var(--teal);bottom:-120px;right:-100px}
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 16px 90px}
+  .ticker{position:relative;z-index:3;background:var(--grad);overflow:hidden;white-space:nowrap;padding:9px 0}
+  .ticker span{display:inline-block;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:#1A1A3E;text-transform:uppercase;animation:slide 36s linear infinite;font-weight:700}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .hero{text-align:center;padding:60px 0 40px}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--lav);margin-bottom:18px}
+  .hero h1{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-1.5px;font-size:clamp(34px,7vw,72px);line-height:1.04}
+  .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .who{margin-top:18px;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
+  .hero .essence{max-width:660px;margin:22px auto 0;color:var(--text-soft);font-size:17px}
+  .vibe{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+  .vibe .v{background:rgba(184,140,237,.08);border:1px solid var(--line);border-radius:16px;padding:16px 22px;min-width:150px}
+  .vibe .v .lbl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lav);margin-bottom:6px}
+  .vibe .v .val{font-family:'Sora',sans-serif;font-weight:700;font-size:18px}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:14px 0 36px;position:sticky;top:0;z-index:20;background:rgba(10,10,31,.85);backdrop-filter:blur(10px);padding:12px;border-radius:40px;border:1px solid var(--line)}
+  .tabs button{background:transparent;border:none;color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 16px;border-radius:30px;cursor:pointer;transition:.2s}
+  .tabs button:hover{color:var(--text)}
+  .tabs button.active{color:var(--navy-1);background:var(--grad);font-weight:700}
+  .panel{display:none}
+  .panel.on{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .section-title{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.5px;font-size:32px;margin-bottom:6px}
+  .section-sub{color:var(--text-soft);font-size:15px;margin-bottom:24px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+  .filters button{background:rgba(184,140,237,.08);border:1px solid var(--line);color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 16px;border-radius:30px;cursor:pointer;transition:.2s}
+  .filters button:hover{color:var(--text);border-color:var(--lav)}
+  .filters button.on{background:var(--grad);color:var(--navy-1);font-weight:700;border-color:transparent}
+  .layers{display:grid;gap:16px}
+  .layer{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.3s}
+  .layer.hidden{display:none}
+  .layer-head{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer}
+  .layer-head .ico{width:48px;height:48px;border-radius:13px;background:var(--grad);display:grid;place-items:center;font-size:23px;flex-shrink:0}
+  .layer-head .meta{flex:1}
+  .layer-head .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
+  .layer-head h4{font-family:'Sora',sans-serif;font-weight:700;font-size:21px;line-height:1.15}
+  .chev{color:var(--text-soft);transition:.3s;font-size:18px}
+  .layer.open .chev{transform:rotate(180deg)}
+  .layer-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+  .layer.open .layer-body{max-height:2200px}
+  .layer-inner{padding:2px 24px 26px;color:var(--text-soft);font-size:15.5px}
+  .layer-inner p{margin-bottom:12px}
+  .layer-inner strong{color:var(--text);font-weight:600}
+  .layer-inner .pull{background:rgba(126,236,212,.07);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;padding:12px 16px;margin-top:14px;font-size:14px;color:var(--text)}
+  .layer-inner .pull .pl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:4px}
+  .cal-wrap{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:20px;padding:22px}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .dow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-soft);text-align:center;text-transform:uppercase;padding-bottom:6px}
+  .day{aspect-ratio:1;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;border:1px solid var(--line);position:relative;transition:.2s}
+  .day.empty{border:none;background:transparent}
+  .day .dot{width:6px;height:6px;border-radius:50%;margin-top:3px}
+  .day.act{cursor:pointer}
+  .day.act:hover{transform:scale(1.08);border-color:var(--teal);z-index:5}
+  .day.go{background:rgba(126,236,212,.14);border-color:var(--teal-2)}
+  .day.go .dot{background:var(--teal)}
+  .day.rest{background:rgba(200,97,125,.16);border-color:var(--coral)}
+  .day.rest .dot{background:var(--coral)}
+  .day.peak{background:rgba(232,160,232,.18);border-color:var(--pink)}
+  .day.peak .dot{background:var(--pink)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text-soft)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .keydates{margin-top:22px;display:grid;gap:10px}
+  .kd{display:flex;gap:14px;align-items:flex-start;background:rgba(10,10,31,.4);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kd .d{font-family:'Space Mono',monospace;font-size:13px;color:var(--teal);font-weight:700;min-width:64px}
+  .kd .t{font-size:14px;color:var(--text-soft)}
+  .kd .t b{color:var(--text)}
+  .bestcols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.bestcols{grid-template-columns:1fr}.tabs{border-radius:20px}}
+  .bestcol{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:18px;padding:22px}
+  .bestcol h5{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+  .bestcol.act h5{color:var(--teal)}
+  .bestcol.protect h5{color:var(--coral)}
+  .bestcol ul{list-style:none}
+  .bestcol li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;color:var(--text-soft)}
+  .bestcol li:last-child{border:none}
+  .bestcol li b{color:var(--text);font-family:'Space Mono',monospace;font-size:13px;margin-right:8px}
+  .wealth-hero{background:linear-gradient(160deg,rgba(126,236,212,.1),rgba(184,140,237,.08));border:1px solid var(--teal);border-radius:20px;padding:28px;margin-bottom:18px}
+  .wealth-hero .big{font-family:'Sora',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.5px;margin-bottom:8px}
+  .wealth-hero p{color:var(--text-soft);font-size:15.5px}
+  .jcard{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:16px}
+  .jcard label{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--lav);margin-bottom:10px}
+  .jcard textarea{width:100%;background:rgba(10,10,31,.6);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;min-height:90px;resize:vertical}
+  .jcard textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(126,236,212,.12)}
+  .save-btn{background:var(--grad);color:var(--navy-1);border:none;border-radius:40px;padding:14px 30px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:.25s}
+  .save-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(184,140,237,.45)}
+  .saved{font-family:'Space Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:1px;margin-left:14px;opacity:0;transition:.3s}
+  .saved.show{opacity:1}
+  .top3{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--lav);border-radius:20px;padding:28px;margin-top:30px}
+  .top3 .t3lbl{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--lav);text-align:center;margin-bottom:18px}
+  .top3 .item{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .top3 .item:last-child{border:none}
+  .top3 .n{width:34px;height:34px;border-radius:50%;background:var(--grad);color:var(--navy-1);font-family:'Sora',sans-serif;font-weight:800;display:grid;place-items:center;flex-shrink:0;font-size:15px}
+  .top3 .item p{font-size:15.5px;padding-top:4px}
+  .modal{position:fixed;inset:0;background:rgba(5,5,16,.78);backdrop-filter:blur(6px);z-index:50;display:none;align-items:center;justify-content:center;padding:22px}
+  .modal.show{display:flex}
+  .modal-box{background:linear-gradient(160deg,var(--navy-card),var(--navy-card-2));border:1px solid var(--teal);border-radius:22px;max-width:440px;width:100%;padding:30px;position:relative}
+  .modal-box h4{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:4px}
+  .modal-box .x{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--text-soft);font-size:22px;background:none;border:none}
+  footer{text-align:center;margin-top:50px;color:var(--text-soft);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="ticker"><span id="tick"></span></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">✦ November 2026 ✦ Your Personalized Forecast</div>
+    <h1>Say It Clearly,<br><em>Get Paid</em> For It</h1>
+    <div class="who">Projector 3/5 ✦ Emotional Authority ✦ Wait for the Invitation</div>
+    <p class="essence">November is a month of clients, conversations and clear offers. The New Moon on the 8th opens a fresh start in your clients and partnerships zone, right on the part of your chart that reinvents how you work with people. On the 13th, your thinking energy and your attraction energy both turn forward again after weeks of review, so the plans you have been turning over all fall finally feel ready. The Full Moon on the 24th lights up your income zone, the part of your chart where money comes through communication. Put your offer into plain words, send it to the people who already know you, and let every pricing decision sit for a few nights before it goes out.</p>
+    <div class="vibe">
+      <div class="v"><div class="lbl">Overall Energy</div><div class="val">Forward Again</div></div>
+      <div class="v"><div class="lbl">Money Climate</div><div class="val">Words That Sell</div></div>
+      <div class="v"><div class="lbl">Best Move</div><div class="val">One Clear Offer</div></div>
+      <div class="v"><div class="lbl">Watch For</div><div class="val">Over-Giving</div></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="active" data-p="layers">The 6 Layers</button>
+    <button data-p="calendar">Transit Calendar</button>
+    <button data-p="bestdays">Best Days</button>
+    <button data-p="wealth">Wealth Layer</button>
+    <button data-p="journal">Reflection</button>
+  </div>
+
+  <div class="panel on" id="panel-layers">
+    <div class="section-title">This Month, Layer by Layer</div>
+    <div class="section-sub">Tap any layer to expand. Filter by what you need right now.</div>
+    <div class="filters" id="filters">
+      <button class="on" data-f="all">All</button>
+      <button data-f="money">💰 Money</button>
+      <button data-f="visibility">📣 Visibility</button>
+      <button data-f="launching">🚀 Launching</button>
+      <button data-f="rest">🌙 Rest</button>
+      <button data-f="relationship">🤝 Relationships</button>
+    </div>
+    <div class="layers" id="layers"></div>
+
+    <div class="top3">
+      <div class="t3lbl">✦ The 3 Most Important Things To Do This Month ✦</div>
+      <div class="item"><div class="n">1</div><p><b>Nov 8 to 12: write your offer in plain words and let it sit.</b> The New Moon on the 8th opens a fresh start with clients. Write one page that says who the offer is for, what they walk away with, and what it costs. Then leave it. Your clarity comes over a few nights, so the version you still like on the 12th is the one you use.</p></div>
+      <div class="item"><div class="n">2</div><p><b>Nov 14 to 15: send the version that still felt right after a few nights.</b> Your thinking and attraction energy both turned forward on the 13th. Send the offer to your warm people first: past buyers, past clients and your email list. The Vault Drop lands on the 15th too, so let the two share one strong week of emails and posts.</p></div>
+      <div class="item"><div class="n">3</div><p><b>Nov 16 to 18: hold your prices and your limits.</b> These three days put a spotlight on the part of your wiring that blurs your worth. You will feel the pull to discount, add bonuses or give sessions away. Decide your holiday and Black Friday plan before the 16th, after several nights of feeling the same way about it, and keep it as decided.</p></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-calendar">
+    <div class="section-title">November at a Glance</div>
+    <div class="section-sub">Color-coded by what the day supports. Tap a marked day for detail. All times Pacific.</div>
+    <div class="cal-wrap">
+      <div class="cal" id="cal"></div>
+      <div class="legend">
+        <span><i style="background:var(--teal)"></i> Best to act</span>
+        <span><i style="background:var(--pink)"></i> Peak / activation</span>
+        <span><i style="background:var(--coral)"></i> Protect energy</span>
+      </div>
+      <div class="keydates" id="keydates"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-bestdays">
+    <div class="section-title">Your Timing Map</div>
+    <div class="section-sub">When to move, and when to pull back, based on your design.</div>
+    <div class="bestcols">
+      <div class="bestcol act">
+        <h5>◆ Best Days To Act</h5>
+        <ul id="actList"></ul>
+      </div>
+      <div class="bestcol protect">
+        <h5>◆ Best Days To Protect Energy</h5>
+        <ul id="protectList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-wealth">
+    <div class="section-title">Wealth & Abundance</div>
+    <div class="section-sub">Where the money wants to move this month, and how to meet it.</div>
+    <div class="wealth-hero">
+      <div class="big">💰 Your money is in your words this month</div>
+      <p>November's income moves through clear language. The Full Moon on the 24th lights up the part of your chart where money comes through communication, and the week before it is the best stretch of the month to write and send a sales email. Say what the offer is, who it is for, and what it costs, in words your people would use themselves. Keep your prices where you set them, and let every pricing change sit for several nights before it goes live.</p>
+    </div>
+    <div class="layers" id="wealthLayers"></div>
+  </div>
+
+  <div class="panel" id="panel-journal">
+    <div class="section-title">Reflection & Action Journal</div>
+    <div class="section-sub">Track what keeps surfacing. Saved in your browser for next month.</div>
+    <div class="jcard">
+      <label>What pattern keeps showing up this month?</label>
+      <textarea id="j_pattern" placeholder="The recurring block, fear, or theme you notice..."></textarea>
+    </div>
+    <div class="jcard">
+      <label>One action I am committing to</label>
+      <textarea id="j_action" placeholder="The move that still feels like a yes after a few nights..."></textarea>
+    </div>
+    <div class="jcard">
+      <label>What I am protecting my energy from</label>
+      <textarea id="j_protect" placeholder="The thing you are saying no to this month..."></textarea>
+    </div>
+    <div class="jcard">
+      <label>Which words actually made people buy?</label>
+      <textarea id="j_traffic" placeholder="Fill in on Nov 30: the subject line, sentence, or post that got replies and sales..."></textarea>
+    </div>
+    <button class="save-btn" onclick="saveJournal()">Save Reflection</button>
+    <span class="saved" id="savedMsg">✓ Saved</span>
+  </div>
+
+  <footer>© 2026 S SINK COACHING ✦ A SACRED PLANNING TOOL</footer>
+</div>
+
+<div class="modal" id="dayModal">
+  <div class="modal-box">
+    <button class="x" onclick="closeModal()">×</button>
+    <div class="eyebrow" id="mDate" style="margin-bottom:6px"></div>
+    <h4 id="mTitle"></h4>
+    <p id="mBody" style="color:var(--text-soft);font-size:15px;margin-top:10px"></p>
+  </div>
+</div>
+
+<script>
+(function(){const s=document.getElementById('stars');for(let i=0;i<130;i++){const d=document.createElement('div');d.className='star';const sz=Math.random()*2+1;d.style.width=d.style.height=sz+'px';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=Math.random()*4+'s';s.appendChild(d);}})();
+document.getElementById('tick').textContent=('✦ NOVEMBER 2026 COSMIC FORECAST ✦ SAY IT CLEARLY, GET PAID FOR IT ').repeat(4);
+
+const tabs=document.getElementById('tabs');
+tabs.addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')return;[...tabs.children].forEach(b=>b.classList.remove('active'));e.target.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.getElementById('panel-'+e.target.dataset.p).classList.add('on');});
+
+const LAYERS=[
+  {cat:['rest'],ico:'🌙',tag:'Layer 1',title:'Internal Landscape',
+   html:`<p>November starts with <strong>your own instinct for what sells</strong> switched on. Through <strong>Nov 5</strong>, the month's background energy runs through a part of your own wiring that reads people and spots what they are ready to buy. You already know which offer your people want. Trust that read.</p><p>From <strong>Nov 10 to 16</strong>, your breakthrough thinking gets louder. This is another part of your own chart, the one that hands you sudden insights. Keep a note open. Ideas that arrive in the shower or on a walk this week are worth writing down, and worth sleeping on before you act.</p><p>From <strong>Nov 16</strong> onward, the month's energy moves through the part of your design that runs on borrowed stamina. You will feel more driven than usual, and some of that drive belongs to the people around you. Watch for the urge to work late every night, especially around Black Friday.</p><p>Your emotional wave will ride high on the 8th and the 11th. <strong>The high is the wrong moment to commit.</strong> Give every meaningful yes a few nights, and use the ones that still feel good once you have come down.</p><div class="pull"><span class="pl">Nervous system note</span>The morning of Nov 29 can feel tender and a bit lonely. Plan a slow day. Rest that weekend counts as work.</div>`},
+  {cat:['visibility','relationship'],ico:'🌍',tag:'Layer 2',title:'External Landscape',
+   html:`<p>Your outer world is <strong>all about clients and partners</strong>. The New Moon on <strong>Nov 8</strong> falls in your clients and partnerships zone, right on the part of your chart that reinvents how you work with people. A new kind of offer, a new way of delivering, or a new partnership can start here.</p><p>On <strong>Nov 11</strong>, expect a surprise from that same zone: a client with an unexpected request, a collaboration idea out of nowhere, or a sudden change of plans. Welcome it. Answer after at least two nights.</p><p>On <strong>Nov 2 and 3</strong>, your drive rubs against that zone, so a client or partner may push, cancel, or ask for a change. Keep your reply short and kind, and let the rest wait a day.</p><p>From <strong>Nov 5 to 10</strong>, the energy moves through your open identity center. Other people's ideas about who you should be get loud. Your 3/5 design already draws projections, so be clear about the one thing you want to be hired for this month and let the rest pass.</p>`},
+  {cat:['visibility','launching','relationship'],ico:'🚀',tag:'Layer 3',title:'Business Focus: One Clear Offer',
+   html:`<p>This is a <strong>say-it-clearly month</strong>. Your thinking energy spends the first half of November in review, then turns forward on the <strong>morning of Nov 13</strong>. Your attraction energy, which has also been reviewing how you work day to day, turns forward that same afternoon. Everything you have been reworking all fall is ready to move.</p><p><strong>Nov 1:</strong> your drive connects with the deep, spiritual side of your work. It is a strong day to create: film, write, or build something that shows the depth of what you teach.</p><p><strong>Nov 6:</strong> your drive connects with your communication energy. Best content day of the first half. Batch posts, write the email, record the video.</p><p><strong>Nov 8 to 12:</strong> write the offer. One page: who it is for, what they walk away with, the price, and how to say yes. Leave it for a few nights.</p><p><strong>Nov 14 and 15:</strong> send it to warm people first. The Vault Drop lands on the 15th, so the week carries two good reasons to email.</p><p><strong>Nov 24 to 25:</strong> the Full Moon in your income zone. Send the clearest sales email you have written all year.</p><div class="pull"><span class="pl">Highest-leverage move</span>Write your holiday offer during Nov 8 to 12, send it Nov 14 and 15, and follow it with one plain, direct sales email on the morning of Nov 24. Reply personally to every answer it gets.</div>`},
+  {cat:['money'],ico:'💰',tag:'Layer 4',title:'Wealth & Abundance',
+   html:`<p>Money moves through <strong>communication</strong> this month. The Full Moon on <strong>Nov 24 at 6:53 AM</strong> lights up your income zone, the spot in your chart where money comes through words: emails, posts, conversations and teaching. A clear sales message sent that week reaches people ready to buy.</p><p>Your attraction energy turns forward on <strong>Nov 13</strong> after weeks of review. Pricing and value questions you have been sitting with start to settle. Keep feeling them out. Any change that still feels right after several nights, you can make after the 18th.</p><p><strong>Nov 16 to 18</strong> is the tricky stretch. Your drive, your expansion energy and the month's spotlight all press on the part of your wiring that blurs your worth. Expect the pull to discount deeply, stack bonuses, or offer free calls. Plan your Black Friday offer before the 16th and hold it.</p><p>On <strong>Nov 28</strong>, the month's energy connects with your foundation zone and your natural generosity. It is a good evening to thank your buyers and clients, with no offer attached.</p><div class="pull"><span class="pl">Money move</span>Write one sales email for the week of the Full Moon. Name the offer, the person it is for, what changes for them, and the price, in words your people use themselves. Send it the morning of Nov 24.</div>`},
+  {cat:['all'],ico:'⚡',tag:'Layer 5',title:'Patterns & Sidetracks',
+   html:`<p>Trap one is <strong>the Black Friday pile-on</strong>. Everyone around you will be launching, discounting and posting all day. From Nov 22, the month's energy runs through your open stamina center, so their urgency will feel like yours. Pick one offer, set it up ahead of time, and let it run.</p><p>Trap two is <strong>over-giving on Nov 16 to 18</strong>. The part of your wiring that blurs your worth gets extra pressure those days. Warmth is lovely. Keep your paid work paid.</p><p>Trap three is <strong>deciding in the review weeks</strong>. Until Nov 13, your thinking energy is still in review. Write plans, make lists, have conversations, and hold the final decision until your wave has settled.</p><div class="pull"><span class="pl">Do not do this</span>Do not change prices, add a new offer, or agree to a big collaboration on the same day it comes up, especially on Nov 8, 11 and 16 to 18. Say "Let me sit with this and come back to you by Friday."</div>`},
+  {cat:['all'],ico:'🗓️',tag:'Layer 6',title:'Timing Map',
+   html:`<p><strong>Nov 1:</strong> Creative drive meets your depth. Make something that shows what you really teach.</p><p><strong>Nov 2 to 3:</strong> Friction with a client or partner is possible. Short, kind replies.</p><p><strong>Nov 4:</strong> Warm, easy energy. Good for your own confidence and a fresh post.</p><p><strong>Nov 6:</strong> Best content day of the first half. Batch and write.</p><p><strong>Nov 8, New Moon, 11:02 PM:</strong> Fresh start in your clients and partnerships zone. Set one intention for how you want to work with people.</p><p><strong>Nov 8 to 12:</strong> Write your offer in plain words. Let it sit.</p><p><strong>Nov 11:</strong> A surprise from a client or collaborator. Welcome it, answer later.</p><p><strong>Nov 13:</strong> Your thinking energy (morning) and attraction energy (afternoon) both turn forward.</p><p><strong>Nov 14 to 15:</strong> Send the offer to warm people. Vault Drop on the 15th.</p><p><strong>Nov 16 to 18:</strong> Worth spotlight. Hold prices and limits.</p><p><strong>Nov 19:</strong> Good day for community: comments, replies, a warm check-in with members.</p><p><strong>Nov 24, Full Moon, 6:53 AM:</strong> Income zone lights up. Send your clearest sales email.</p><p><strong>Nov 26 to 27:</strong> Thanksgiving and Black Friday. Let your pre-set offer run. Rest.</p><p><strong>Nov 28 to 30:</strong> Gratitude to buyers on the 28th, a slow tender day on the 29th, review on the 30th.</p>`}
+];
+
+function highlightFilter(){
+  document.getElementById('filters').addEventListener('click',e=>{
+    if(e.target.tagName!=='BUTTON')return;
+    [...e.target.parentElement.children].forEach(b=>b.classList.remove('on'));
+    e.target.classList.add('on');
+    const f=e.target.dataset.f;
+    document.querySelectorAll('#layers .layer').forEach(L=>{
+      const cats=L.dataset.cats.split(',');
+      L.classList.toggle('hidden', f!=='all' && !cats.includes(f) && !cats.includes('all'));
+    });
+  });
+}
+function buildLayers(target,list,openFirst){
+  const c=document.getElementById(target);c.innerHTML='';
+  list.forEach((L,i)=>{
+    const el=document.createElement('div');
+    el.className='layer'+(openFirst&&i===0?' open':'');
+    el.dataset.cats=L.cat.join(',');
+    el.innerHTML=`<div class="layer-head"><div class="ico">${L.ico}</div><div class="meta"><div class="tag">${L.tag}</div><h4>${L.title}</h4></div><div class="chev">▾</div></div><div class="layer-body"><div class="layer-inner">${L.html}</div></div>`;
+    el.querySelector('.layer-head').onclick=()=>el.classList.toggle('open');
+    c.appendChild(el);
+  });
+}
+buildLayers('layers',LAYERS,true);
+buildLayers('wealthLayers',[LAYERS[3]],true);
+highlightFilter();
+
+const ACT=[
+  ['Nov 1','Creative drive meets your depth. Film, write or build.'],
+  ['Nov 4','Warm confidence. A good day for a fresh post about your work.'],
+  ['Nov 6','Best content day of the first half. Batch posts and write the email.'],
+  ['Nov 14 to 15','Send your offer to warm people. Vault Drop on the 15th.'],
+  ['Nov 19','Community day. Comments, replies and member check-ins.'],
+  ['Nov 24 to 25','Full Moon in your income zone. Send your clearest sales email.'],
+  ['Nov 28','Thank your buyers and clients, no offer attached.']
+];
+const PROTECT=[
+  ['Nov 2 to 3','Friction with a client or partner possible. Short, kind replies.'],
+  ['Nov 9','Big promises come easily today. Promise less than you want to.'],
+  ['Nov 16 to 18','Worth spotlight. Hold prices, limits and your paid work.'],
+  ['Nov 26 to 27','Thanksgiving and Black Friday. Let the pre-set offer run and rest.'],
+  ['Nov 29','A tender, low morning. Plan a slow day.']
+];
+function fillBest(id,arr){const ul=document.getElementById(id);arr.forEach(([d,t])=>{const li=document.createElement('li');li.innerHTML=`<b>${d}</b>${t}`;ul.appendChild(li);});}
+fillBest('actList',ACT);fillBest('protectList',PROTECT);
+
+const GO={1:1,4:1,6:1,14:1,15:1,19:1,25:1,28:1,30:1};
+const REST={2:1,3:1,9:1,16:1,17:1,18:1,26:1,27:1,29:1};
+const PEAK={8:1,11:1,13:1,24:1};
+const NOTES={
+  1:'Creative drive meets the deep, spiritual side of your work. Film, write or build something that shows what you really teach. Your instinct for what sells is switched on through the 5th.',
+  2:'Your drive rubs against your clients and partnerships zone. A client or partner may push, cancel or ask for changes. Keep replies short and kind.',
+  3:'Friction eases through the day. Let yesterday\'s tension settle before you answer anything important.',
+  4:'Warm, easy energy for your own confidence. A good day for a fresh post about why you do this work.',
+  6:'Best content day of the first half. Your drive connects with your communication energy. Batch posts, write the email, record the video.',
+  8:'New Moon at 11:02 PM in your clients and partnerships zone, right on the part of your chart that reinvents how you work with people. Set one intention for how you want to work with clients. The month\'s spotlight also connects with your career drive today.',
+  9:'Big promises come easily today, and your thinking energy is still in review. Promise less than you want to and decide nothing final.',
+  11:'Surprise day. The month\'s spotlight lands on the part of your chart that reinvents how you work with people. Expect an unexpected client request or collaboration idea. Welcome it and answer after two nights.',
+  13:'Turning point. Your thinking energy turns forward in the morning and your attraction energy turns forward in the afternoon. The plans you have been reworking all fall are ready to move.',
+  14:'Send your offer to warm people first: past buyers, past clients and your list.',
+  15:'Vault Drop day. Pair it with a follow-up about your offer.',
+  16:'Worth spotlight begins. Expect the pull to discount or over-give. Hold your prices and limits. The month\'s energy moves into your borrowed-stamina zone today, so watch the late nights.',
+  17:'Worth spotlight continues. Keep your paid work paid.',
+  18:'Last day of the worth spotlight. The month\'s energy sits right on your worth and relationships spot. Notice what you value, and let pricing changes wait a few more nights.',
+  19:'Community day. Your thinking energy connects with the part of you that loves your audience. Reply to comments and check in with members.',
+  24:'Full Moon at 6:53 AM in your income zone, where money comes through communication. Send your clearest sales email this morning.',
+  25:'Follow up on yesterday\'s email. Answer every reply personally.',
+  26:'Thanksgiving. Rest. Let anything pre-scheduled run on its own.',
+  27:'Black Friday. Let your pre-set offer run. The month\'s energy runs through your open stamina center, so everyone else\'s urgency will feel like yours. Skip the pile-on.',
+  28:'Evening generosity. Thank your buyers and clients, with no offer attached.',
+  29:'A tender, low morning. Plan a slow day and be gentle with yourself.',
+  30:'Review day. Which words made people buy? Fill in your journal before December.'
+};
+(function buildCal(){
+  const c=document.getElementById('cal');
+  ['S','M','T','W','T','F','S'].forEach(x=>{const e=document.createElement('div');e.className='dow';e.textContent=x;c.appendChild(e);});
+  const first=new Date(2026,10,1).getDay();
+  const days=30;
+  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='day empty';c.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const e=document.createElement('div');e.className='day';
+    let label='';
+    if(PEAK[d]){e.classList.add('peak','act');label='Peak / activation';}
+    else if(GO[d]){e.classList.add('go','act');label='Best day to act';}
+    else if(REST[d]){e.classList.add('rest','act');label='Protect your energy';}
+    if(e.classList.contains('act')){e.innerHTML=`${d}<span class="dot"></span>`;e.onclick=()=>openModal(d,label,NOTES[d]||label);}
+    else e.textContent=d;
+    c.appendChild(e);
+  }
+  const kd=document.getElementById('keydates');
+  const items=[
+    ['Nov 1','<b>Creative drive meets your depth.</b> Make something real.'],
+    ['Nov 6','<b>Best content day.</b> Batch and write.'],
+    ['Nov 8','<b>New Moon, 11:02 PM.</b> Fresh start with clients. Write the offer.'],
+    ['Nov 11','<b>Surprise from a client or collaborator.</b> Answer later.'],
+    ['Nov 13','<b>Forward again.</b> Thinking and attraction energy both turn.'],
+    ['Nov 15','<b>Vault Drop.</b> Send the offer to warm people.'],
+    ['Nov 16','<b>Worth spotlight through the 18th.</b> Hold prices.'],
+    ['Nov 24','<b>Full Moon, 6:53 AM.</b> Income zone. Send the sales email.'],
+    ['Nov 27','<b>Black Friday.</b> Let the pre-set offer run.']
+  ];
+  items.forEach(([d,t])=>{const el=document.createElement('div');el.className='kd';el.innerHTML=`<div class="d">${d}</div><div class="t">${t}</div>`;kd.appendChild(el);});
+})();
+function openModal(d,title,body){document.getElementById('mDate').textContent='November '+d;document.getElementById('mTitle').textContent=title;document.getElementById('mBody').textContent=body;document.getElementById('dayModal').classList.add('show');}
+function closeModal(){document.getElementById('dayModal').classList.remove('show');}
+document.getElementById('dayModal').addEventListener('click',e=>{if(e.target.id==='dayModal')closeModal();});
+
+const JKEY='cosmicJournal_November2026';
+function saveJournal(){try{const data={p:j_pattern.value,a:j_action.value,pr:j_protect.value,t:j_traffic.value};localStorage.setItem(JKEY,JSON.stringify(data));const s=document.getElementById('savedMsg');s.classList.add('show');setTimeout(()=>s.classList.remove('show'),2200);}catch(e){}}
+(function load(){try{const r=localStorage.getItem(JKEY);if(r){const d=JSON.parse(r);j_pattern.value=d.p||'';j_action.value=d.a||'';j_protect.value=d.pr||'';j_traffic.value=d.t||'';}}catch(e){}})();
+</script>
+</body>
+</html>
