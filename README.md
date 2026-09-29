@@ -4,6 +4,7 @@ Monthly business forecasts, one folder per month (`month-year`, lowercase). The 
 
 | Month | Folder | Moved from |
 |---|---|---|
+| October 2026 | `october-2026/` | uploaded 2026-09-29 |
 | July 2026 | `july-2026/` | `sunnysink/july-forecast-2026` |
 | June 2026 | `june-2026/` | `sunnysink/june2026forecast` |
 
